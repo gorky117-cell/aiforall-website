@@ -1,0 +1,978 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+<title>AI for All - Eliminating the GPU Tax in AI</title>
+<meta name="description" content="AI for All delivers edge-first AI infrastructure that reduces inference cost through efficient compute orchestration across device and cloud.">
+<meta name="keywords" content="AI for All, edge AI, on-device AI, edge cloud orchestration, GPU cost reduction, AI infrastructure, emerging markets AI">
+<meta property="og:site_name" content="AI for All">
+<meta property="og:title" content="AI for All - Eliminating the GPU Tax in AI">
+<meta property="og:description" content="Edge-first AI infrastructure that reduces inference cost through efficient compute orchestration across device and cloud.">
+<meta property="og:url" content="https://www.aiforall.ltd">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.aiforall.ltd/assets/ai-for-all-orb-final.png">
+<meta property="og:image:alt" content="AI for All logo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI for All - Eliminating the GPU Tax in AI">
+<meta name="twitter:description" content="Edge-first AI infrastructure that reduces inference cost through efficient compute orchestration across device and cloud.">
+<meta name="twitter:image" content="https://www.aiforall.ltd/assets/ai-for-all-orb-final.png">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.aiforall.ltd">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "AI for All",
+  "url": "https://www.aiforall.ltd",
+  "logo": "https://www.aiforall.ltd/assets/ai-for-all-orb-final.png",
+  "founder": {
+    "@type": "Person",
+    "name": "Gaurav Kumar Singh"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/gaurav-aiforall/",
+    "https://medium.com/@gauravatwork117"
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#04080b;
+  --bg-soft:#071015;
+  --card:#0b1218;
+  --card-2:#0e171f;
+  --line:rgba(148,163,184,.14);
+  --line-strong:rgba(0,229,176,.22);
+  --text:#f4f8fb;
+  --muted:#8aa0b4;
+  --muted-2:#607588;
+  --teal:#13e6c2;
+  --teal-soft:rgba(19,230,194,.10);
+  --blue:#41a5ff;
+  --amber:#ffb020;
+  --violet:#a78bfa;
+  --max:1120px;
+}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(19,230,194,.12),transparent 30rem),
+    linear-gradient(180deg,#000 0%,#020405 48%,#000 100%);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+a{color:inherit}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.32;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,black,transparent 78%);
+}
+.site-nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  border-bottom:1px solid var(--line);
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(18px);
+}
+.nav-inner{
+  max-width:none;
+  width:100%;
+  height:70px;
+  margin:0;
+  padding:0 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+}
+.nav-logo{display:inline-flex;align-items:center;text-decoration:none}
+.nav-logo img{height:38px;width:auto;display:block}
+.nav-links{display:flex;align-items:center;gap:1.45rem;margin:0 auto}
+.nav-links a{
+  color:var(--muted);
+  font-size:.84rem;
+  font-weight:500;
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  color:var(--teal)!important;
+  border:1px solid var(--line-strong);
+  border-radius:999px;
+  padding:.48rem .9rem;
+  background:var(--teal-soft);
+}
+.menu-btn{
+  display:none;
+  width:42px;
+  height:42px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:rgba(255,255,255,.03);
+  color:var(--text);
+}
+.menu-btn span{
+  display:block;
+  width:18px;
+  height:2px;
+  margin:4px auto;
+  background:currentColor;
+  border-radius:2px;
+}
+.mobile-menu{
+  display:none;
+  border-top:1px solid var(--line);
+  padding:.75rem 1.4rem 1.2rem;
+  background:rgba(4,8,11,.96);
+}
+.mobile-menu.open{display:grid}
+.mobile-menu a{
+  padding:.8rem 0;
+  border-bottom:1px solid var(--line);
+  color:var(--muted);
+  font-size:.95rem;
+  text-decoration:none;
+}
+.mobile-menu a:last-child{border-bottom:0;color:var(--teal)}
+.hero{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:7.4rem 1.35rem 5.4rem;
+  position:relative;
+}
+.hero-wrap{
+  width:min(var(--max),100%);
+  display:grid;
+  grid-template-columns:1fr;
+  gap:2.4rem;
+  align-items:center;
+  justify-items:center;
+  text-align:center;
+}
+.hero-copy{
+  max-width:860px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.hero-logo{
+  width:min(250px,72vw);
+  height:auto;
+  display:block;
+  margin:0 auto 1.1rem;
+  filter:drop-shadow(0 12px 34px rgba(0,229,176,.08));
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:.55rem;
+  margin-bottom:.9rem;
+  color:var(--teal);
+  font-size:.76rem;
+  font-weight:700;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.eyebrow::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:999px;
+  background:var(--teal);
+  box-shadow:0 0 22px var(--teal);
+}
+h1{
+  max-width:760px;
+  font-size:clamp(2.65rem,7.5vw,5.9rem);
+  line-height:.95;
+  letter-spacing:-.065em;
+  font-weight:800;
+  margin-bottom:1.4rem;
+}
+.teal{color:var(--teal)}
+.hero-sub{
+  max-width:660px;
+  color:var(--muted);
+  font-size:clamp(1rem,1.7vw,1.18rem);
+  line-height:1.85;
+  margin-bottom:2rem;
+}
+.hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.85rem;margin-bottom:2.2rem}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:46px;
+  padding:.8rem 1.15rem;
+  border-radius:12px;
+  font-size:.9rem;
+  font-weight:700;
+  text-decoration:none;
+}
+.btn-primary{background:var(--teal);color:#04100d}
+.btn-secondary{border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.02)}
+.proof-strip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  max-width:680px;
+  margin:0 auto;
+  border:1px solid var(--line);
+  border-radius:18px;
+  overflow:hidden;
+  background:var(--line);
+}
+.proof-item{background:rgba(7,16,21,.82);padding:1.05rem}
+.proof-value{display:block;color:var(--teal);font-size:1.35rem;font-weight:800;line-height:1}
+.proof-label{display:block;color:var(--muted);font-size:.75rem;margin-top:.35rem}
+.section{padding:6rem 1.35rem;position:relative}
+.section.alt{background:rgba(7,16,21,.48);border-block:1px solid var(--line)}
+.wrap{width:min(var(--max),100%);margin:0 auto}
+.section-head{max-width:650px;margin-bottom:2.4rem}
+.section-head.center{text-align:center;margin-inline:auto}
+.s-label{display:block;color:var(--teal);font-size:.72rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;margin-bottom:.8rem}
+.s-title{font-size:clamp(2rem,4vw,3.15rem);line-height:1.04;letter-spacing:-.05em;font-weight:800;margin-bottom:1rem}
+.s-sub{color:var(--muted);font-size:1rem;line-height:1.85}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.card{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:1.35rem;
+  background:linear-gradient(180deg,rgba(14,23,31,.78),rgba(7,16,21,.66));
+}
+.card-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border:1px solid var(--line-strong);
+  border-radius:14px;
+  background:var(--teal-soft);
+  color:var(--teal);
+  font-weight:800;
+  margin-bottom:1rem;
+}
+.card h3{font-size:1.05rem;margin-bottom:.55rem}
+.card p{color:var(--muted);font-size:.9rem;line-height:1.75}
+.routing-diagram{
+  margin-top:2.6rem;
+  display:grid;
+  grid-template-columns:minmax(160px,1fr) auto minmax(170px,170px) auto minmax(266px,1.2fr) auto minmax(160px,1fr);
+  gap:1rem;
+  align-items:center;
+}
+.routing-stage,
+.routing-router{
+  min-height:168px;
+  border-radius:26px;
+  padding:1.35rem;
+  text-align:center;
+}
+.routing-stage{
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(17,20,27,.92),rgba(11,14,18,.88));
+  box-shadow:0 18px 50px rgba(0,0,0,.18);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.routing-router{
+  border:2px solid rgba(19,230,194,.55);
+  background:linear-gradient(180deg,rgba(6,17,20,.95),rgba(6,17,20,.84));
+  box-shadow:0 0 0 1px rgba(19,230,194,.08) inset,0 0 60px rgba(19,230,194,.10);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.routing-icon{
+  width:48px;
+  height:48px;
+  margin-bottom:1rem;
+  color:var(--teal);
+}
+.routing-stage h3,
+.routing-router h3{
+  font-size:1rem;
+  font-weight:800;
+  letter-spacing:-.03em;
+}
+.routing-arrow{
+  width:86px;
+  height:2px;
+  position:relative;
+  background:linear-gradient(90deg,rgba(19,230,194,.18),var(--teal));
+}
+.routing-arrow::after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:50%;
+  width:12px;
+  height:12px;
+  border-top:2px solid var(--teal);
+  border-right:2px solid var(--teal);
+  transform:translateY(-50%) rotate(45deg);
+}
+.routing-lanes{display:grid;gap:1rem}
+.routing-lane{
+  min-height:50px;
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+  padding:0 1.15rem;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:rgba(17,20,27,.84);
+  font-size:.92rem;
+  font-weight:700;
+  letter-spacing:-.02em;
+}
+.routing-lane svg{
+  width:18px;
+  height:18px;
+  flex:0 0 auto;
+}
+.routing-lane.edge{border-color:rgba(19,230,194,.34);color:#55efc6}
+.routing-lane.cloud{border-color:rgba(65,165,255,.34);color:#55b8ff}
+.routing-lane.llm{border-color:rgba(167,139,250,.34);color:#b697ff}
+.routing-metrics{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1rem;
+  margin-top:2rem;
+}
+.routing-metric{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:1.25rem 1rem;
+  background:linear-gradient(180deg,rgba(17,20,27,.92),rgba(11,14,18,.88));
+  text-align:center;
+}
+.routing-metric strong{
+  display:block;
+  color:#19d9f3;
+  font-size:clamp(1.55rem,3vw,2.35rem);
+  line-height:1;
+  letter-spacing:-.06em;
+  margin-bottom:.7rem;
+}
+.routing-metric h3{
+  font-size:.88rem;
+  margin-bottom:.3rem;
+}
+.routing-metric p{
+  color:var(--muted);
+  font-size:.8rem;
+  line-height:1.45;
+}
+.metric-card{text-align:center;padding:2rem 1.25rem}
+.metric-number{display:block;color:var(--teal);font-size:clamp(1.5rem,3.2vw,2.35rem);font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:.45rem}
+.metric-card h3{font-size:1rem;margin-bottom:.35rem}
+.metric-card p{color:var(--muted);font-size:.86rem}
+.progress-list{display:grid;gap:.75rem;max-width:780px;margin:2.2rem auto 0}
+.progress-item{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:1rem;
+  align-items:center;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(7,16,21,.72);
+  padding:.85rem;
+}
+.p-badge{
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.p-badge.done{background:rgba(19,230,194,.82);color:#04100d}
+.p-badge.progress{background:rgba(255,176,32,.9);color:#160e00}
+.p-badge.next{background:rgba(148,163,184,.28);color:#e5edf5}
+.p-text{color:var(--text);font-size:.93rem}
+.founder-panel{
+  display:grid;
+  grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);
+  gap:1rem;
+  align-items:stretch;
+}
+.founder-id,.founder-note{
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:linear-gradient(180deg,rgba(14,23,31,.78),rgba(7,16,21,.64));
+  padding:1.45rem;
+}
+.founder-id h3{font-size:1.15rem;margin-bottom:.25rem}
+.founder-role{color:var(--teal);font-size:.82rem;font-weight:700;margin-bottom:1rem}
+.founder-tags{display:flex;flex-wrap:wrap;gap:.45rem}
+.founder-tags span{
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:var(--muted);
+  font-size:.75rem;
+  padding:.32rem .65rem;
+  background:rgba(255,255,255,.03);
+}
+.founder-note p{color:var(--muted);font-size:.95rem;line-height:1.85}
+.founder-links{
+  margin-top:1rem;
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+}
+.founder-links a{
+  min-height:30px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 .62rem;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.02);
+  color:var(--muted);
+  font-size:.74rem;
+  text-decoration:none;
+}
+.founder-links a:hover{color:var(--teal)}
+.contact-box{
+  display:grid;
+  grid-template-columns:minmax(280px,1fr) auto;
+  align-items:center;
+  gap:1.25rem;
+  border:1px solid var(--line-strong);
+  border-radius:24px;
+  padding:1.25rem 1.35rem;
+  background:linear-gradient(135deg,rgba(19,230,194,.10),rgba(65,165,255,.05));
+}
+.contact-box h2{font-size:1.45rem;letter-spacing:-.03em}
+.contact-box p{color:var(--muted);font-size:.9rem}
+.contact-stage{
+  display:inline-flex;
+  align-items:center;
+  margin-top:.55rem;
+  min-height:28px;
+  padding:0 .58rem;
+  border:1px solid rgba(19,230,194,.24);
+  border-radius:999px;
+  background:rgba(19,230,194,.08);
+  color:#9beedb;
+  font-size:.72rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.contact-right{
+  display:grid;
+  gap:.5rem;
+  justify-items:end;
+}
+.contact-actions{
+  display:flex;
+  gap:.55rem;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  align-items:center;
+}
+.contact-direct{
+  margin-top:.25rem;
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  color:var(--muted);
+  font-size:.76rem;
+  text-decoration:none;
+}
+.contact-direct:hover{color:var(--teal)}
+.contact-direct svg{
+  width:12px;
+  height:12px;
+  flex:0 0 auto;
+}
+.contact-quick-links{
+  margin-top:.2rem;
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.contact-quick-links a{
+  min-height:30px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 .62rem;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.02);
+  color:var(--muted);
+  font-size:.74rem;
+  text-decoration:none;
+}
+.contact-quick-links a:hover{color:var(--teal)}
+.contact-actions .btn{
+  min-height:42px;
+  padding:.58rem .9rem;
+  font-size:.84rem;
+  border-radius:10px;
+}
+.contact-actions .btn-primary{min-width:172px}
+.contact-actions .btn-secondary{min-width:92px}
+.contact-actions .btn-email{
+  min-width:0;
+  padding:.58rem .72rem;
+  font-size:.8rem;
+  color:var(--muted);
+  border-color:rgba(148,163,184,.18);
+}
+footer{
+  border-top:1px solid var(--line);
+  padding:2.2rem 1.35rem;
+  background:#030608;
+}
+.footer-grid{
+  width:min(var(--max),100%);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:1.5rem;
+  align-items:center;
+}
+.footer-brand img{height:34px;width:auto;display:block;margin-bottom:.7rem}
+.footer-brand-title{font-size:1rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.7rem}
+.footer-brand p{color:var(--muted);font-size:.82rem;max-width:360px}
+.footer-links{display:flex;gap:1rem;flex-wrap:wrap;justify-content:flex-end}
+.footer-links{
+  color:var(--muted);
+  font-size:.74rem;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+.copyright{width:min(var(--max),100%);margin:1.4rem auto 0;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted-2);font-size:.76rem}
+@media(max-width:880px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .hero-wrap{grid-template-columns:1fr;gap:2rem;text-align:center}
+  .grid-3,.grid-2,.founder-panel{grid-template-columns:1fr}
+  .routing-diagram{grid-template-columns:1fr;gap:1rem}
+  .routing-arrow{display:none}
+  .routing-metrics{grid-template-columns:1fr}
+  .contact-box{grid-template-columns:1fr}
+  .contact-right{justify-items:start}
+  .contact-actions{justify-content:flex-start}
+  .contact-quick-links{justify-content:flex-start}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-links{justify-content:flex-start}
+}
+@media(max-width:560px){
+  .nav-inner{height:64px;padding:0 1rem}
+  .nav-logo img{height:31px}
+  .hero{padding:7.1rem 1rem 4rem;place-items:center}
+  .hero-logo{width:min(285px,88vw);margin-bottom:1.7rem}
+  h1{font-size:clamp(2.25rem,14vw,3.5rem)}
+  .hero-sub{font-size:.98rem;line-height:1.75}
+  .hero-actions{display:grid}
+  .btn{width:100%}
+  .proof-strip{grid-template-columns:1fr}
+  .proof-item{padding:.9rem}
+  .section{padding:4.2rem 1rem}
+  .card,.founder-id,.founder-note,.contact-box{border-radius:18px}
+  .progress-item{grid-template-columns:1fr;gap:.55rem;padding:.8rem}
+  .p-badge{width:100%;min-height:40px}
+  .footer-links{display:grid;gap:.7rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="#architecture">Architecture</a>
+      <a href="#market">Market</a>
+      <a href="#business-model-milestones">Model</a>
+      <a href="#customer-segments">Customers</a>
+      <a href="#progress">Progress</a>
+      <a href="#founder">Founder</a>
+      <a href="#contact">Contact</a>
+      <a href="./request-demo.html" class="nav-cta">Request Demo</a>
+    </div>
+    <button class="menu-btn" type="button" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#architecture">Architecture</a>
+    <a href="#market">Market</a>
+    <a href="#business-model-milestones">Model</a>
+    <a href="#customer-segments">Customers</a>
+    <a href="#progress">Progress</a>
+    <a href="#founder">Founder</a>
+    <a href="#contact">Contact</a>
+    <a href="./request-demo.html">Request Demo</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="hero-wrap">
+      <div class="hero-copy">
+        <img class="hero-logo" src="assets/ai-for-all-orb-final.png" alt="AI for All">
+        <div class="eyebrow">Edge-first AI infrastructure</div>
+        <h1>Eliminating the GPU tax in <span class="teal">AI.</span></h1>
+        <p class="hero-sub">
+          Routes every query to the lowest-cost compute layer — edge first, cloud only when necessary.
+        </p>
+        <div class="hero-actions">
+          <a href="#architecture" class="btn btn-secondary">View architecture</a>
+          <a href="#progress" class="btn btn-secondary">See progress</a>
+        </div>
+        <div class="proof-strip" aria-label="Key proof points">
+          <div class="proof-item"><span class="proof-value">70%</span><span class="proof-label">Up to 70% of queries handled at the edge</span></div>
+          <div class="proof-item"><span class="proof-value">50-80%</span><span class="proof-label">Up to 50–80% reduction in cloud inference cost</span></div>
+          <div class="proof-item"><span class="proof-value">500M+</span><span class="proof-label">data-constrained smartphone users</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="s-label">Why It Matters</span>
+        <h2 class="s-title">AI adoption will be decided by unit economics.</h2>
+        <p class="s-sub">
+          AI fails at scale when cost per query becomes unsustainable. This system fixes that.
+        </p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-icon">01</div>
+          <h3>Cloud cost pressure</h3>
+          <p>Sending routine queries to cloud drives avoidable cost</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">02</div>
+          <h3>Bandwidth constraints</h3>
+          <p>Low-cost devices and weak networks limit cloud-first AI</p>
+        </article>
+        <article class="card">
+          <div class="card-icon">03</div>
+          <h3>Local intelligence</h3>
+          <p>Routine tasks run on-device. Advanced models used selectively</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="architecture">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="s-label">How It Works</span>
+        <h2 class="s-title">Efficient AI Orchestration</h2>
+        <p class="s-sub">
+          Each query is routed to the most efficient compute path
+        </p>
+        <p class="s-sub" style="margin-top:.7rem;">
+          Powered by a proprietary orchestration engine. Patent pending.
+        </p>
+      </div>
+      <div class="routing-diagram" aria-label="Intelligent query routing flow">
+        <div class="routing-stage">
+          <svg class="routing-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3 4 7l8 4 8-4-8-4Z"></path>
+            <path d="m4 12 8 4 8-4"></path>
+            <path d="m4 17 8 4 8-4"></path>
+          </svg>
+          <h3>Query</h3>
+        </div>
+        <div class="routing-arrow" aria-hidden="true"></div>
+        <div class="routing-router">
+          <svg class="routing-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"></circle>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          <h3>AI Engine</h3>
+        </div>
+        <div class="routing-arrow" aria-hidden="true"></div>
+        <div class="routing-lanes">
+          <div class="routing-lane edge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="3" width="6" height="18" rx="1.5"></rect>
+              <path d="M11 6h2"></path>
+              <path d="M11 18h2"></path>
+            </svg>
+            <span>Edge — 70%</span>
+          </div>
+          <div class="routing-lane cloud">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 18a4 4 0 1 1 .9-7.9A5 5 0 0 1 19 12a3 3 0 0 1-1 5.8H7Z"></path>
+            </svg>
+            <span>Cloud CPU — 20%</span>
+          </div>
+          <div class="routing-lane llm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9.5 3.5A3.5 3.5 0 0 0 7 9.5v1A3.5 3.5 0 0 0 9.5 17"></path>
+              <path d="M14.5 3.5A3.5 3.5 0 0 1 17 9.5v1A3.5 3.5 0 0 1 14.5 17"></path>
+              <path d="M9 10h6"></path>
+              <path d="M9 14h6"></path>
+              <path d="M12 7v10"></path>
+            </svg>
+            <span>LLM — 10%</span>
+          </div>
+        </div>
+        <div class="routing-arrow" aria-hidden="true"></div>
+        <div class="routing-stage">
+          <svg class="routing-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8"></circle>
+            <path d="m9.2 12 1.8 1.8 3.8-4.1"></path>
+          </svg>
+          <h3>Result</h3>
+        </div>
+      </div>
+      <p class="s-sub" style="text-align:center;margin-top:.8rem;max-width:860px;margin-inline:auto;">
+        Based on early workload testing (2026), not theoretical assumptions.
+      </p>
+      <div class="routing-metrics">
+        <article class="routing-metric">
+          <strong>Low Latency</strong>
+          <h3>Latency</h3>
+          <p>Local-first responses</p>
+        </article>
+        <article class="routing-metric">
+          <strong>Lower GPU Usage</strong>
+          <h3>GPU Load</h3>
+          <p>Reduced cloud usage</p>
+        </article>
+        <article class="routing-metric">
+          <strong>On-Device Execution</strong>
+          <h3>Data Control</h3>
+          <p>Routine tasks stay local</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="market">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="s-label">Market</span>
+        <h2 class="s-title">Built for practical AI access.</h2>
+      </div>
+      <div class="grid-2">
+        <article class="card metric-card">
+          <span class="metric-number">~500M+</span>
+          <h3>Beachhead: NGO &amp; government pilots in emerging markets</h3>
+          <p>Focused go-to-market through institutional pilots where cost and deployment constraints are immediate.</p>
+        </article>
+        <article class="card metric-card">
+          <span class="metric-number">~1B+ potential users by 2030 (emerging markets)</span>
+          <h3>Projected potential</h3>
+          <p>India, Southeast Asia, Africa, and Latin America entering practical AI adoption at scale.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="business-model-milestones">
+    <div class="wrap">
+      <div class="section-head center">
+        <h2 class="s-title">Business Model &amp; Milestones</h2>
+        <p class="s-sub"></p>
+      </div>
+      <div class="section-head center">
+        <span class="s-label">Revenue Model</span>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <h3>API &amp; Orchestration Layer</h3>
+          <p>Usage-based pricing tied to compute efficiency (cost advantage vs cloud-only)</p>
+        </article>
+        <article class="card">
+          <h3>SMB &amp; Institutional Tools</h3>
+          <p>Subscription AI tools (SMBs, schools, NGOs)</p>
+        </article>
+        <article class="card">
+          <h3>Enterprise &amp; Partnerships</h3>
+          <p>Enterprise deployments (OEM, telecom, government)</p>
+        </article>
+        <article class="card">
+          <h3>Early Commercial Signals</h3>
+          <p>Active pilots and early paid deployments</p>
+        </article>
+        <article class="card">
+          <h3>Future Expansion</h3>
+          <p>Developer SDK and ecosystem (scale)</p>
+        </article>
+      </div>
+      <div class="section-head center" style="margin-top:1.6rem;">
+        <span class="s-label">Milestones</span>
+      </div>
+      <div class="grid-2">
+        <article class="card">
+          <h3>2026 (Year 1)</h3>
+          <p>- MVP deployment (edge + cloud)<br>- Initial pilot deployments (NGO / government)<br>- Cost advantage validation<br>- First paid contract</p>
+        </article>
+        <article class="card">
+          <h3>2027 (Year 2)</h3>
+          <p>- Pilot conversion → production scale<br>- Regional partnerships<br>- API &amp; developer platform launch<br>- Unit economics proven</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="customer-segments">
+    <div class="wrap">
+      <div class="section-head center">
+        <h2 class="s-title">Customer Segments</h2>
+        <p class="s-sub">Target beachhead: NGO &amp; government deployments.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card">
+          <h3>OEM &amp; Infra (Future)</h3>
+          <p>- Device makers<br>- Telecoms<br>- Infra providers<br>- Platform integration</p>
+        </article>
+        <article class="card">
+          <h3>SMBs &amp; Institutions (Future)</h3>
+          <p>- Small businesses<br>- Schools, NGOs<br>- Local orgs<br>- Daily AI operations</p>
+        </article>
+        <article class="card">
+          <h3>Developers (Future)</h3>
+          <p>- API access<br>- SDKs<br>- Build on platform</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="progress">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="s-label">Progress</span>
+        <h2 class="s-title">Current stage</h2>
+      </div>
+      <div class="progress-list">
+        <div class="progress-item"><span class="p-badge done">Done</span><span class="p-text">Edge layer live (local testing)</span></div>
+        <div class="progress-item"><span class="p-badge done">Done</span><span class="p-text">Patent filed - complete specification, App No. 202511059693</span></div>
+        <div class="progress-item"><span class="p-badge done">Done</span><span class="p-text">Core orchestration implemented</span></div>
+        <div class="progress-item"><span class="p-badge progress">In progress</span><span class="p-text">Cloud pipeline live, optimizing</span></div>
+        <div class="progress-item"><span class="p-badge progress">In progress</span><span class="p-text">Edge–cloud integration testing</span></div>
+        <div class="progress-item"><span class="p-badge next">To start</span><span class="p-text">Android APK (build + testing)</span></div>
+        <div class="progress-item"><span class="p-badge next">Next</span><span class="p-text">First NGO/government pilot</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="founder">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="s-label">Founder</span>
+        <h2 class="s-title">Operator-led execution.</h2>
+        <p class="s-sub">
+          AI for All applies operating discipline to AI access—reducing waste, improving efficiency, and making unit economics work at scale.
+        </p>
+      </div>
+      <div class="founder-panel">
+        <div class="founder-id">
+          <h3>Gaurav Kumar Singh</h3>
+          <div class="founder-role">Founder</div>
+          <div class="founder-tags">
+            <span>Industrial operations</span>
+            <span>Unit economics</span>
+            <span>AI infrastructure</span>
+            <span>Practical MVP execution</span>
+          </div>
+        </div>
+        <div class="founder-note">
+          <p>
+            Most AI systems are built for the top 1%. The rest face cost and access barriers.<br><br>
+            My background in industrial operations and supply chains is built on one principle:<br>
+            systems scale only when unit economics work.<br><br>
+            This approach applies that discipline to AI infrastructure—<br>
+            making intelligence efficient, scalable, and accessible.<br><br>
+            20+ years in operations and supply chains—now applied to AI.
+          </p>
+          <div class="founder-links">
+            <a href="https://www.linkedin.com/in/gaurav-aiforall/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://medium.com/@gauravatwork117" target="_blank" rel="noopener">Blog</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="contact-box">
+        <div>
+          <h2>Launch a pilot</h2>
+          <p>For partnerships, pilot deployments, and investor discussions.</p>
+          <span class="contact-stage">Raising pre-seed to launch first pilots and validate unit economics.</span>
+        </div>
+        <div class="contact-right">
+          <div class="contact-actions">
+            <a class="btn btn-primary" href="./request-demo.html">Request Demo</a>
+          </div>
+          <div class="contact-quick-links">
+            <a href="https://calendly.com/gaurav-aiforall/" target="_blank" rel="noopener">Book meeting</a>
+            <a href="mailto:gaurav@aiforall.ltd">Email</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-title">AI for All</div>
+      <p>Edge-first AI infrastructure for cost-efficient intelligence at global scale.</p>
+    </div>
+    <div class="footer-links">Patent filed (complete specification) | App No. 202511059693</div>
+  </div>
+  <div class="copyright">&copy; 2026 AI for All. All rights reserved.</div>
+</footer>
+
+<script>
+function toggleMenu(){
+  var menu = document.getElementById("mobileMenu");
+  if (menu) menu.classList.toggle("open");
+}
+document.querySelectorAll(".mobile-menu a").forEach(function(link){
+  link.addEventListener("click",function(){
+    var menu = document.getElementById("mobileMenu");
+    if (menu) menu.classList.remove("open");
+  });
+});
+</script>
+
+</body>
+</html>
+
