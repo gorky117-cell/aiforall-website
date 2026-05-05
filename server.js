@@ -18,7 +18,31 @@ const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static(__dirname));
+
+function getHost(req) {
+  return String(req.headers.host || "").split(":")[0].toLowerCase();
+}
+
+function isPublicWebsiteHost(host) {
+  return host === "www.aiforall.ltd" || host === "aiforall.ltd";
+}
+
+function isFounderHost(host) {
+  return host === "gaurav.aiforall.ltd";
+}
+
+app.get(["/", "/index.html"], (req, res) => {
+  const host = getHost(req);
+  if (isPublicWebsiteHost(host)) {
+    return res.sendFile(path.join(__dirname, "aiforall-final.html"));
+  }
+  if (isFounderHost(host)) {
+    return res.sendFile(path.join(__dirname, "index.html"));
+  }
+  return res.sendFile(path.join(__dirname, "aiforall-final.html"));
+});
+
+app.use(express.static(__dirname, { index: false }));
 
 function normalizeRedirect(value) {
   if (!value || typeof value !== "string") return fallbackRedirect;
