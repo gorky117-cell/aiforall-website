@@ -33,6 +33,13 @@ function isFounderHost(host) {
   return host === "gaurav.aiforall.ltd";
 }
 
+app.use((req, res, next) => {
+  if (getHost(req) === "aiforall.ltd") {
+    return res.redirect(301, `https://www.aiforall.ltd${req.originalUrl}`);
+  }
+  return next();
+});
+
 app.get(["/", "/index.html"], (req, res) => {
   const host = getHost(req);
   if (isPublicWebsiteHost(host)) {
