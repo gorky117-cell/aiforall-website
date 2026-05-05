@@ -11,7 +11,9 @@ const port = Number(process.env.PORT || 8080);
 
 const resendApiKey = process.env.RESEND_API_KEY || "";
 const requestDemoTo = process.env.REQUEST_DEMO_TO || "gaurav@aiforall.ltd";
-const requestDemoFrom = process.env.REQUEST_DEMO_FROM || "AI for ALL <noreply@aiforall.ltd>";
+const requestDemoFrom = process.env.REQUEST_DEMO_FROM || `AI for ALL <${requestDemoTo}>`;
+const requestDemoConfirmationFrom = process.env.REQUEST_DEMO_CONFIRMATION_FROM || requestDemoFrom;
+const requestDemoReplyTo = process.env.REQUEST_DEMO_REPLY_TO || requestDemoTo;
 const fallbackRedirect = process.env.REQUEST_DEMO_REDIRECT || "/request-demo-thanks.html";
 
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
@@ -102,13 +104,15 @@ app.post("/api/request-demo", async (req, res) => {
     }
 
     const autoReply = await resend.emails.send({
-      from: requestDemoFrom,
+      from: requestDemoConfirmationFrom,
       to: [email],
+      replyTo: requestDemoReplyTo,
       subject: "We received your AI for ALL demo request",
       html: `
         <p>Hi ${esc(name)},</p>
         <p>Thank you for requesting a demo of AI for ALL.</p>
         <p>We have received your message and will come back soon with demo details or the next step.</p>
+        <p>You can reply to this email to reach us directly.</p>
       `
     });
     if (autoReply.error) {
