@@ -26,6 +26,8 @@
   "name": "AI for All",
   "url": "https://www.aiforall.ltd",
   "logo": "https://www.aiforall.ltd/assets/ai-for-all-orb-final.png",
+  "description": "AI for All is an AI infrastructure startup building edge-first AI orchestration to reduce inference cost across device and cloud compute.",
+  "foundingDate": "2026",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "79/1 Nashvilla Road",
@@ -408,6 +410,63 @@ h1{
 .metric-number{display:block;color:var(--teal);font-size:clamp(1.5rem,3.2vw,2.35rem);font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:.45rem}
 .metric-card h3{font-size:1rem;margin-bottom:.35rem}
 .metric-card p{color:var(--muted);font-size:.86rem}
+.company-summary{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:1rem;
+  align-items:stretch;
+}
+.company-panel{
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:1.45rem;
+  background:linear-gradient(180deg,rgba(14,23,31,.78),rgba(7,16,21,.64));
+}
+.company-panel h3{font-size:1.05rem;margin-bottom:.55rem}
+.company-panel p{color:var(--muted);font-size:.92rem;line-height:1.75}
+.company-facts{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:.7rem;
+  margin-top:1rem;
+}
+.company-fact{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:.85rem;
+  background:rgba(255,255,255,.025);
+}
+.company-fact span{
+  display:block;
+  color:var(--muted-2);
+  font-size:.68rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:.25rem;
+}
+.company-fact strong{
+  display:block;
+  color:var(--text);
+  font-size:.86rem;
+  line-height:1.45;
+}
+.review-list{display:grid;gap:.75rem}
+.review-item{
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:.9rem;
+  background:rgba(255,255,255,.025);
+}
+.review-item strong{display:block;font-size:.88rem;margin-bottom:.25rem}
+.review-item p{font-size:.84rem;line-height:1.55}
+.company-fact a,
+.review-item a{
+  color:var(--teal);
+  text-decoration:none;
+}
+.company-fact a:hover,
+.review-item a:hover{text-decoration:underline}
 .progress-list{display:grid;gap:.75rem;max-width:780px;margin:2.2rem auto 0}
 .progress-item{
   display:grid;
@@ -596,7 +655,8 @@ footer{
   .nav-links{display:none}
   .menu-btn{display:block}
   .hero-wrap{grid-template-columns:1fr;gap:2rem;text-align:center}
-  .grid-3,.grid-2,.founder-panel{grid-template-columns:1fr}
+  .grid-3,.grid-2,.company-summary,.founder-panel{grid-template-columns:1fr}
+  .company-facts{grid-template-columns:1fr}
   .routing-diagram{grid-template-columns:1fr;gap:1rem}
   .routing-arrow{display:none}
   .routing-metrics{grid-template-columns:1fr}
@@ -619,7 +679,7 @@ footer{
   .proof-strip{grid-template-columns:1fr}
   .proof-item{padding:.9rem}
   .section{padding:4.2rem 1rem}
-  .card,.founder-id,.founder-note,.contact-box{border-radius:18px}
+  .card,.company-panel,.founder-id,.founder-note,.contact-box{border-radius:18px}
   .progress-item{grid-template-columns:1fr;gap:.55rem;padding:.8rem}
   .p-badge{width:100%;min-height:40px}
   .footer-links{display:grid;gap:.7rem}
@@ -633,6 +693,7 @@ footer{
     <div class="nav-links">
       <a href="#architecture">Architecture</a>
       <a href="#market">Market</a>
+      <a href="#company">Company</a>
       <a href="#business-model-milestones">Model</a>
       <a href="#customer-segments">Customers</a>
       <a href="#progress">Progress</a>
@@ -647,6 +708,7 @@ footer{
   <div class="mobile-menu" id="mobileMenu">
     <a href="#architecture">Architecture</a>
     <a href="#market">Market</a>
+    <a href="#company">Company</a>
     <a href="#business-model-milestones">Model</a>
     <a href="#customer-segments">Customers</a>
     <a href="#progress">Progress</a>
@@ -679,7 +741,7 @@ footer{
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section">
     <div class="wrap">
       <div class="section-head center">
         <span class="s-label">Why It Matters</span>
@@ -812,6 +874,49 @@ footer{
           <span class="metric-number">~1B+</span>
           <h3>Potential by 2030</h3>
           <p>India, SE Asia, Africa, Latin America</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="company">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="s-label">Company</span>
+        <h2 class="s-title">AI cost optimization infrastructure.</h2>
+        <p class="s-sub">
+          AI for All is a digital-native business building software infrastructure for lower-cost AI inference across edge devices and cloud systems.
+        </p>
+      </div>
+      <div class="company-summary">
+        <article class="company-panel">
+          <h3>Business and product</h3>
+          <p>
+            The company is developing an orchestration layer that evaluates each AI query and routes it to the lowest-cost compute path: on-device execution first, cloud CPU when suitable, and larger LLMs only when needed. The goal is to make AI access economically practical for bandwidth- and cost-constrained users, institutions, and emerging-market deployments.
+          </p>
+          <div class="company-facts" aria-label="Public company facts">
+            <div class="company-fact"><span>Business model</span><strong>Usage-based API, institutional subscriptions, and enterprise partnerships</strong></div>
+            <div class="company-fact"><span>Product stage</span><strong>MVP architecture built; edge-cloud integration in testing</strong></div>
+            <div class="company-fact"><span>Founder</span><strong><a href="https://gaurav.aiforall.ltd" target="_blank" rel="noopener">Gaurav Kumar Singh</a></strong></div>
+            <div class="company-fact"><span>Contact</span><strong><a href="mailto:gaurav@aiforall.ltd">gaurav@aiforall.ltd</a></strong></div>
+          </div>
+        </article>
+        <article class="company-panel">
+          <h3>Public review details</h3>
+          <div class="review-list">
+            <div class="review-item">
+              <strong>Digital-native model</strong>
+              <p>Core value is delivered through AI routing software, APIs, and infrastructure tooling rather than consulting services.</p>
+            </div>
+            <div class="review-item">
+              <strong>Target customers</strong>
+              <p>NGOs, public-sector pilots, SMBs, schools, telecom/OEM partners, and developers building AI for constrained environments.</p>
+            </div>
+            <div class="review-item">
+              <strong>Public links</strong>
+              <p><a href="https://gaurav.aiforall.ltd" target="_blank" rel="noopener">Founder profile</a>, <a href="https://www.linkedin.com/in/gaurav-aiforall/" target="_blank" rel="noopener">LinkedIn</a>, <a href="https://medium.com/@gauravatwork117" target="_blank" rel="noopener">blog</a>, <a href="./request-demo.html">demo request</a>, <a href="./sitemap.xml">sitemap</a>, <a href="mailto:gaurav@aiforall.ltd">business email</a>, and address are listed on this domain.</p>
+            </div>
+          </div>
         </article>
       </div>
     </div>
